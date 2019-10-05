@@ -22,7 +22,7 @@ namespace CardGame {
             return;
         }
 
-        public Card at(int index) {
+        public Card At(int index) {
             if (index < 0 || index > 4) {
                 throw new IndexOutOfRangeException();
             }
@@ -119,43 +119,43 @@ namespace CardGame {
             return threeOfAKind;
         }
 
-        public int getTwoOfAKind() {
-            int twoOfAKind = 0;
+        public int getOnePair() {
+            int onePair = 0;
             if (hand[0].cardValue == hand[1].cardValue) {
-                twoOfAKind = hand[0].cardValue;
+                onePair = hand[0].cardValue;
             }
             if (hand[0].cardValue == hand[2].cardValue) {
-                twoOfAKind = hand[0].cardValue;
+                onePair = hand[0].cardValue;
             }
             if (hand[0].cardValue == hand[3].cardValue) {
-                twoOfAKind = hand[0].cardValue;
+                onePair = hand[0].cardValue;
             }
             if (hand[0].cardValue == hand[4].cardValue) {
-                twoOfAKind = hand[0].cardValue;
+                onePair = hand[0].cardValue;
             }
             if (hand[1].cardValue == hand[2].cardValue) {
-                twoOfAKind = hand[1].cardValue;
+                onePair = hand[1].cardValue;
             }
             if (hand[1].cardValue == hand[3].cardValue) {
-                twoOfAKind = hand[1].cardValue;
+                onePair = hand[1].cardValue;
             }
             if (hand[1].cardValue == hand[4].cardValue) {
-                twoOfAKind = hand[1].cardValue;
+                onePair = hand[1].cardValue;
             }
             if (hand[2].cardValue == hand[3].cardValue) {
-                twoOfAKind = hand[2].cardValue;
+                onePair = hand[2].cardValue;
             }
             if (hand[2].cardValue == hand[4].cardValue) {
-                twoOfAKind = hand[2].cardValue;
+                onePair = hand[2].cardValue;
             }
             if (hand[3].cardValue == hand[4].cardValue) {
-                twoOfAKind = hand[3].cardValue;
+                onePair = hand[3].cardValue;
             }
-            return twoOfAKind;
+            return onePair;
         }
 
         public int[] getTwoPair() {
-            // store card values of each pair and remaining card in last index
+            // store card values of each pair and kicker card in last index
             int[] twoPair = new int[3];
             twoPair[0] = 0;
             twoPair[1] = 0;
@@ -169,7 +169,7 @@ namespace CardGame {
                 twoPair[1] = hand[2].cardValue;
                 twoPair[2] = hand[3].cardValue;
             }
-            if (hand[0].cardValue == hand[1].cardValue && hand[3].cardValue == hand[3].cardValue) {
+            if (hand[0].cardValue == hand[1].cardValue && hand[3].cardValue == hand[4].cardValue) {
                 twoPair[0] = hand[0].cardValue;
                 twoPair[1] = hand[3].cardValue;
                 twoPair[2] = hand[2].cardValue;
@@ -242,6 +242,24 @@ namespace CardGame {
                 twoPair[1] = temp;
             }
             return twoPair;
+        }
+
+        public Card getKicker(List<int> indices) {
+            // gets card of greatest value of hand at given indices
+            if (indices.Count > 5) {
+                throw new ArgumentException("indices list is too long");
+            }
+            indices.Sort();
+            if (indices[indices.Count-1] > 4 || indices[0] < 0) {
+                throw new ArgumentException("index in indices is out of range (0-4)");
+            }
+            List<Card> cards = new List<Card>();
+            for (int i=0; i<indices.Count; i++) {
+                cards.Add(hand[i]);
+            }
+            cards.Sort(delegate (Card c1, Card c2) { return c1.cardValue.CompareTo(c2.cardValue); });
+            Card kicker = cards[cards.Count - 1];
+            return kicker;
         }
 
         public int highCard() {

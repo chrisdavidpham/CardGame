@@ -35,14 +35,72 @@ namespace CardGame {
             }
 
             if (0 == players.Count) {
-                Console.WriteLine("There are no players. Press enter to continue");
-                Console.ReadLine();
-                return 0;
+                //Console.WriteLine("There are no players. Press enter to continue");
+                //Console.ReadLine();
+                //return 0;
+
+                //tests
+                Card a = new Card(1, 2);
+                Card b = new Card(1, 3);
+                Card c = new Card(1, 4);
+                Card d = new Card(1, 5);
+                Card d = new Card(1, 6);
+                Card d = new Card(1, 4);
             }
 
             Console.WriteLine("Welcome players");
             for (int i = 0; i < players.Count; i++) {
                 Console.WriteLine(players[i].name + " : " + players[i].getHandString());
+                
+                if (players[i].hand.getFourOfAKind() > 0) {
+                    Console.WriteLine("fourOfAKind: true");
+                }
+                else {
+                    Console.WriteLine("fourOfAKind: false");
+                }
+
+                if (players[i].hand.getFullHouse() > 0) {
+                    Console.WriteLine("fullHouse: true");
+                }
+                else {
+                    Console.WriteLine("fullHouse: false");
+                }
+
+                if (players[i].hand.getFlush()) {
+                    Console.WriteLine("flush: true");
+                }
+                else {
+                    Console.WriteLine("flush: false");
+                }
+
+                if (players[i].hand.getStraight() > 0) {
+                    Console.WriteLine("straight: true");
+                }
+                else {
+                    Console.WriteLine("straight: false");
+                }
+
+                if (players[i].hand.getThreeOfAKind() > 0) {
+                    Console.WriteLine("threeOfAKind: true");
+                }
+                else {
+                    Console.WriteLine("threeOfAKind: false");
+                }
+
+                int[] twoPair = players[i].hand.getTwoPair();
+                if (twoPair[0] > 0) {
+                    Console.WriteLine("twoPair: true");
+                }
+                else {
+                    Console.WriteLine("twoPair: false");
+                }
+
+                if (players[i].hand.getOnePair() > 0) {
+                    Console.WriteLine("onePair: true");
+                }
+                else {
+                    Console.WriteLine("onePair: false");
+                }
             }
 
             Console.WriteLine("Done! Press enter to continue");
