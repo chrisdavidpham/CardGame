@@ -44,7 +44,7 @@ namespace CardGame {
             int highCard = 0;
             bool straight = true;
             for (int i = 0; i < 4; i++) {
-                if (hand[i].cardValue != hand[i + 1].cardValue) {
+                if (hand[i].cardValue + 1 != hand[i + 1].cardValue) {
                     straight = false;
                     break;
                 }

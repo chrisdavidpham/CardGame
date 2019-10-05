@@ -11,11 +11,11 @@ namespace CardGame {
             Deck gameDeck = new Deck();
 
             while ((line = file.ReadLine()) != null) {
-                List<Card> playerHand = new List<Card>();
-
                 if (String.IsNullOrWhiteSpace(line)) {
                     continue;
                 }
+                
+                List<Card> playerHand = new List<Card>();
 
                 for (int j = 0; j < 5; j++) {
                     try {
@@ -35,17 +35,9 @@ namespace CardGame {
             }
 
             if (0 == players.Count) {
-                //Console.WriteLine("There are no players. Press enter to continue");
-                //Console.ReadLine();
-                //return 0;
-
-                //tests
-                Card a = new Card(1, 2);
-                Card b = new Card(1, 3);
-                Card c = new Card(1, 4);
-                Card d = new Card(1, 5);
-                Card d = new Card(1, 6);
-                Card d = new Card(1, 4);
+                Console.WriteLine("There are no players. Press enter to continue");
+                Console.ReadLine();
+                return 0;
             }
 
             Console.WriteLine("Welcome players");
