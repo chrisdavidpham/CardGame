@@ -84,6 +84,166 @@ namespace CardGame {
             }
         }
 
+        public int getThreeOfAKind() {
+            int threeOfAKind = 0;
+            if (hand[0].cardValue == hand[1].cardValue && hand[0].cardValue == hand[2].cardValue) {
+                threeOfAKind = hand[0].cardValue;
+            }
+            if (hand[0].cardValue == hand[1].cardValue && hand[0].cardValue == hand[3].cardValue) {
+                threeOfAKind = hand[0].cardValue;
+            }
+            if (hand[0].cardValue == hand[1].cardValue && hand[0].cardValue == hand[4].cardValue) {
+                threeOfAKind = hand[0].cardValue;
+            }
+            if (hand[0].cardValue == hand[2].cardValue && hand[0].cardValue == hand[3].cardValue) {
+                threeOfAKind = hand[0].cardValue;
+            }
+            if (hand[0].cardValue == hand[2].cardValue && hand[0].cardValue == hand[4].cardValue) {
+                threeOfAKind = hand[0].cardValue;
+            }
+            if (hand[0].cardValue == hand[3].cardValue && hand[0].cardValue == hand[4].cardValue) {
+                threeOfAKind = hand[0].cardValue;
+            }
+            if (hand[1].cardValue == hand[2].cardValue && hand[1].cardValue == hand[3].cardValue) {
+                threeOfAKind = hand[1].cardValue;
+            }
+            if (hand[1].cardValue == hand[2].cardValue && hand[1].cardValue == hand[4].cardValue) {
+                threeOfAKind = hand[1].cardValue;
+            }
+            if (hand[1].cardValue == hand[3].cardValue && hand[1].cardValue == hand[4].cardValue) {
+                threeOfAKind = hand[1].cardValue;
+            }
+            if (hand[2].cardValue == hand[3].cardValue && hand[2].cardValue == hand[4].cardValue) {
+                threeOfAKind = hand[2].cardValue;
+            }
+            return threeOfAKind;
+        }
+
+        public int getTwoOfAKind() {
+            int twoOfAKind = 0;
+            if (hand[0].cardValue == hand[1].cardValue) {
+                twoOfAKind = hand[0].cardValue;
+            }
+            if (hand[0].cardValue == hand[2].cardValue) {
+                twoOfAKind = hand[0].cardValue;
+            }
+            if (hand[0].cardValue == hand[3].cardValue) {
+                twoOfAKind = hand[0].cardValue;
+            }
+            if (hand[0].cardValue == hand[4].cardValue) {
+                twoOfAKind = hand[0].cardValue;
+            }
+            if (hand[1].cardValue == hand[2].cardValue) {
+                twoOfAKind = hand[1].cardValue;
+            }
+            if (hand[1].cardValue == hand[3].cardValue) {
+                twoOfAKind = hand[1].cardValue;
+            }
+            if (hand[1].cardValue == hand[4].cardValue) {
+                twoOfAKind = hand[1].cardValue;
+            }
+            if (hand[2].cardValue == hand[3].cardValue) {
+                twoOfAKind = hand[2].cardValue;
+            }
+            if (hand[2].cardValue == hand[4].cardValue) {
+                twoOfAKind = hand[2].cardValue;
+            }
+            if (hand[3].cardValue == hand[4].cardValue) {
+                twoOfAKind = hand[3].cardValue;
+            }
+            return twoOfAKind;
+        }
+
+        public int[] getTwoPair() {
+            // store card values of each pair and remaining card in last index
+            int[] twoPair = new int[3];
+            twoPair[0] = 0;
+            twoPair[1] = 0;
+            if (hand[0].cardValue == hand[1].cardValue && hand[2].cardValue == hand[3].cardValue) {
+                twoPair[0] = hand[0].cardValue;
+                twoPair[1] = hand[2].cardValue;
+                twoPair[2] = hand[4].cardValue;
+            }
+            if (hand[0].cardValue == hand[1].cardValue && hand[2].cardValue == hand[4].cardValue) {
+                twoPair[0] = hand[0].cardValue;
+                twoPair[1] = hand[2].cardValue;
+                twoPair[2] = hand[3].cardValue;
+            }
+            if (hand[0].cardValue == hand[1].cardValue && hand[3].cardValue == hand[3].cardValue) {
+                twoPair[0] = hand[0].cardValue;
+                twoPair[1] = hand[3].cardValue;
+                twoPair[2] = hand[2].cardValue;
+            }
+            if (hand[0].cardValue == hand[2].cardValue && hand[1].cardValue == hand[3].cardValue) {
+                twoPair[0] = hand[0].cardValue;
+                twoPair[1] = hand[1].cardValue;
+                twoPair[2] = hand[4].cardValue;
+            }
+            if (hand[0].cardValue == hand[2].cardValue && hand[1].cardValue == hand[4].cardValue) {
+                twoPair[0] = hand[0].cardValue;
+                twoPair[1] = hand[1].cardValue;
+                twoPair[2] = hand[3].cardValue;
+            }
+            if (hand[0].cardValue == hand[2].cardValue && hand[3].cardValue == hand[4].cardValue) {
+                twoPair[0] = hand[0].cardValue;
+                twoPair[1] = hand[3].cardValue;
+                twoPair[2] = hand[1].cardValue;
+            }
+            if (hand[0].cardValue == hand[3].cardValue && hand[1].cardValue == hand[2].cardValue) {
+                twoPair[0] = hand[0].cardValue;
+                twoPair[1] = hand[1].cardValue;
+                twoPair[2] = hand[4].cardValue;
+            }
+            if (hand[0].cardValue == hand[3].cardValue && hand[1].cardValue == hand[4].cardValue) {
+                twoPair[0] = hand[0].cardValue;
+                twoPair[1] = hand[1].cardValue;
+                twoPair[2] = hand[2].cardValue;
+            }
+            if (hand[0].cardValue == hand[3].cardValue && hand[2].cardValue == hand[4].cardValue) {
+                twoPair[0] = hand[0].cardValue;
+                twoPair[1] = hand[2].cardValue;
+                twoPair[2] = hand[1].cardValue;
+            }
+            if (hand[0].cardValue == hand[4].cardValue && hand[1].cardValue == hand[2].cardValue) {
+                twoPair[0] = hand[0].cardValue;
+                twoPair[1] = hand[1].cardValue;
+                twoPair[2] = hand[3].cardValue;
+            }
+            if (hand[0].cardValue == hand[4].cardValue && hand[1].cardValue == hand[3].cardValue) {
+                twoPair[0] = hand[0].cardValue;
+                twoPair[1] = hand[1].cardValue;
+                twoPair[2] = hand[2].cardValue;
+            }
+            if (hand[0].cardValue == hand[4].cardValue && hand[2].cardValue == hand[3].cardValue) {
+                twoPair[0] = hand[0].cardValue;
+                twoPair[1] = hand[2].cardValue;
+                twoPair[2] = hand[1].cardValue;
+            }
+            if (hand[1].cardValue == hand[2].cardValue && hand[3].cardValue == hand[4].cardValue) {
+                twoPair[0] = hand[1].cardValue;
+                twoPair[1] = hand[3].cardValue;
+                twoPair[2] = hand[0].cardValue;
+            }
+            if (hand[1].cardValue == hand[3].cardValue && hand[2].cardValue == hand[4].cardValue) {
+                twoPair[0] = hand[1].cardValue;
+                twoPair[1] = hand[2].cardValue;
+                twoPair[2] = hand[0].cardValue;
+            }
+            if (hand[1].cardValue == hand[4].cardValue && hand[2].cardValue == hand[3].cardValue) {
+                twoPair[0] = hand[1].cardValue;
+                twoPair[1] = hand[2].cardValue;
+                twoPair[2] = hand[0].cardValue;
+            }
+
+            // sort descending
+            if (twoPair[0] < twoPair[1]) {
+                int temp = twoPair[0];
+                twoPair[0] = twoPair[1];
+                twoPair[1] = temp;
+            }
+            return twoPair;
+        }
+
         public int highCard() {
             return hand[4].cardValue;
         }
