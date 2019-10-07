@@ -11,19 +11,17 @@ namespace CardGame {
             Deck gameDeck = new Deck();
 
             while ((line = file.ReadLine()) != null) {
-                List<Card> playerHand = new List<Card>();
-
                 if (String.IsNullOrWhiteSpace(line)) {
                     continue;
                 }
+                
+                List<Card> playerHand = new List<Card>();
 
                 for (int j = 0; j < 5; j++) {
                     try {
                         playerHand.Add(gameDeck.getRandom());
                     }
                     catch (System.InvalidOperationException ex) {
-                        //System.InvalidOperationException emptyEx = new System.InvalidOperationException("There are not enough cards for all the players");
-                        //throw emptyEx;
                         Console.WriteLine("There are not enough cards for all the players. Press enter to continue");
                         Console.ReadLine();
                         return 1;
@@ -43,6 +41,34 @@ namespace CardGame {
             Console.WriteLine("Welcome players");
             for (int i = 0; i < players.Count; i++) {
                 Console.WriteLine(players[i].name + " : " + players[i].getHandString());
+
+                if (players[i].hand.isFourOfAKind) {
+                    Console.WriteLine("Four of a kind");
+                }
+                else if (players[i].hand.isStraight && players[i].hand.isFlush) {
+                    Console.WriteLine("Straight flush");
+                }
+                else if (players[i].hand.isFlush) {
+                    Console.WriteLine("Flush");
+                }
+                else if (players[i].hand.isStraight) {
+                    Console.WriteLine("Straight");
+                }
+                else if (players[i].hand.isFullHouse) {
+                    Console.WriteLine("Full House");
+                }
+                else if (players[i].hand.isThreeOfAKind) {
+                    Console.WriteLine("Three of a Kind");
+                }
+                else if (players[i].hand.isTwoPair) {
+                    Console.WriteLine("Two Pair");
+                }
+                else if (players[i].hand.isOnePair) {
+                    Console.WriteLine("One Pair");
+                }
+                else {
+                    Console.WriteLine("High card");
+                }
             }
 
             Console.WriteLine("Done! Press enter to continue");
