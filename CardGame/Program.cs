@@ -22,8 +22,6 @@ namespace CardGame {
                         playerHand.Add(gameDeck.getRandom());
                     }
                     catch (System.InvalidOperationException ex) {
-                        //System.InvalidOperationException emptyEx = new System.InvalidOperationException("There are not enough cards for all the players");
-                        //throw emptyEx;
                         Console.WriteLine("There are not enough cards for all the players. Press enter to continue");
                         Console.ReadLine();
                         return 1;
@@ -43,55 +41,33 @@ namespace CardGame {
             Console.WriteLine("Welcome players");
             for (int i = 0; i < players.Count; i++) {
                 Console.WriteLine(players[i].name + " : " + players[i].getHandString());
-                
-                if (players[i].hand.getFourOfAKind() > 0) {
-                    Console.WriteLine("fourOfAKind: true");
-                }
-                else {
-                    Console.WriteLine("fourOfAKind: false");
-                }
 
-                if (players[i].hand.getFullHouse() > 0) {
-                    Console.WriteLine("fullHouse: true");
+                if (players[i].hand.isFourOfAKind) {
+                    Console.WriteLine("Four of a kind");
+                }
+                else if (players[i].hand.isStraight && players[i].hand.isFlush) {
+                    Console.WriteLine("Straight flush");
+                }
+                else if (players[i].hand.isFlush) {
+                    Console.WriteLine("Flush");
+                }
+                else if (players[i].hand.isStraight) {
+                    Console.WriteLine("Straight");
+                }
+                else if (players[i].hand.isFullHouse) {
+                    Console.WriteLine("Full House");
+                }
+                else if (players[i].hand.isThreeOfAKind) {
+                    Console.WriteLine("Three of a Kind");
+                }
+                else if (players[i].hand.isTwoPair) {
+                    Console.WriteLine("Two Pair");
+                }
+                else if (players[i].hand.isOnePair) {
+                    Console.WriteLine("One Pair");
                 }
                 else {
-                    Console.WriteLine("fullHouse: false");
-                }
-
-                if (players[i].hand.getFlush()) {
-                    Console.WriteLine("flush: true");
-                }
-                else {
-                    Console.WriteLine("flush: false");
-                }
-
-                if (players[i].hand.getStraight() > 0) {
-                    Console.WriteLine("straight: true");
-                }
-                else {
-                    Console.WriteLine("straight: false");
-                }
-
-                if (players[i].hand.getThreeOfAKind() > 0) {
-                    Console.WriteLine("threeOfAKind: true");
-                }
-                else {
-                    Console.WriteLine("threeOfAKind: false");
-                }
-
-                int[] twoPair = players[i].hand.getTwoPair();
-                if (twoPair[0] > 0) {
-                    Console.WriteLine("twoPair: true");
-                }
-                else {
-                    Console.WriteLine("twoPair: false");
-                }
-
-                if (players[i].hand.getOnePair() > 0) {
-                    Console.WriteLine("onePair: true");
-                }
-                else {
-                    Console.WriteLine("onePair: false");
+                    Console.WriteLine("High card");
                 }
             }
 
