@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CardGame {
     public class Hand {
-        List<Card> hand;
+        private List<Card> hand;
         List<Card> fourOfAKindKickers;
         List<Card> straightKickers;
         List<Card> flushKickers;
@@ -34,17 +34,20 @@ namespace CardGame {
             isThreeOfAKind = false;
             isTwoPair = false;
             isOnePair = false;
-            sortAscending();
-            evaluateHand();
+            hand = sortAscending(hand);
         }
 
         public int getCount() {
             return hand.Count;
         }
 
-        public void sortAscending() {
-            hand.Sort(delegate (Card c1, Card c2) { return c1.cardValue.CompareTo(c2.cardValue); });
-            return;
+        private List<Card> sortAscending(List<Card> cardList) {
+            cardList.Sort(delegate (Card c1, Card c2) { return c1.cardValue.CompareTo(c2.cardValue); });
+            return cardList;
+        }
+        private List<Card> sortDescending(List<Card> cardList) {
+            cardList.Sort(delegate (Card c1, Card c2) { return c2.cardValue.CompareTo(c1.cardValue); });
+            return cardList;
         }
 
         public Card At(int index) {
@@ -90,6 +93,9 @@ namespace CardGame {
 
         public int getFlush() {
             if (hand[0].cardSuit == hand[1].cardSuit && hand[0].cardSuit == hand[2].cardSuit && hand[0].cardSuit == hand[3].cardSuit && hand[0].cardSuit == hand[4].cardSuit) {
+                for(int i=4; i>=0; i--) {
+                    flushKickers.Add(hand[i]);
+                }
                 return hand[4].cardValue;
             }
             return 0;
@@ -114,12 +120,21 @@ namespace CardGame {
         public int getThreeOfAKind() {
             int threeOfAKind = 0;
             if (hand[0].cardValue == hand[1].cardValue && hand[0].cardValue == hand[2].cardValue) {
+                threeOfAKindKickers.Add(hand[3]);
+                threeOfAKindKickers.Add(hand[4]);
+                threeOfAKindKickers = sortDescending(threeOfAKindKickers);
                 threeOfAKind = hand[0].cardValue;
             }
             if (hand[1].cardValue == hand[2].cardValue && hand[1].cardValue == hand[3].cardValue) {
+                threeOfAKindKickers.Add(hand[0]);
+                threeOfAKindKickers.Add(hand[4]);
+                threeOfAKindKickers = sortDescending(threeOfAKindKickers);
                 threeOfAKind = hand[1].cardValue;
             }
             if (hand[2].cardValue == hand[3].cardValue && hand[2].cardValue == hand[4].cardValue) {
+                threeOfAKindKickers.Add(hand[0]);
+                threeOfAKindKickers.Add(hand[1]);
+                threeOfAKindKickers = sortDescending(threeOfAKindKickers);
                 threeOfAKind = hand[2].cardValue;
             }
             return threeOfAKind;
