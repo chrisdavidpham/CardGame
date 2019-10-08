@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 namespace CardGame {
     public class Hand {
         private List<Card> hand;
-        List<Card> fourOfAKindKickers;
-        List<Card> straightKickers;
-        List<Card> flushKickers;
-        List<Card> threeOfAKindKickers;
-        List<Card> twoPairKickers;
+        public List<Card> fourOfAKindKickers;
+        public List<Card> straightKickers;
+        public List<Card> flushKickers;
+        public List<Card> threeOfAKindKickers;
+        public List<Card> twoPairKickers;
+        public List<Card> onePairKickers;
         public bool isFourOfAKind;
         public bool isStraight;
         public bool isFlush;
@@ -50,7 +51,7 @@ namespace CardGame {
             return cardList;
         }
 
-        public Card At(int index) {
+        public Card at(int index) {
             if (index < 0 || index > 4) {
                 throw new IndexOutOfRangeException();
             }
@@ -120,20 +121,20 @@ namespace CardGame {
         public int getThreeOfAKind() {
             int threeOfAKind = 0;
             if (hand[0].cardValue == hand[1].cardValue && hand[0].cardValue == hand[2].cardValue) {
-                threeOfAKindKickers.Add(hand[3]);
                 threeOfAKindKickers.Add(hand[4]);
+                threeOfAKindKickers.Add(hand[3]);
                 threeOfAKindKickers = sortDescending(threeOfAKindKickers);
                 threeOfAKind = hand[0].cardValue;
             }
             if (hand[1].cardValue == hand[2].cardValue && hand[1].cardValue == hand[3].cardValue) {
-                threeOfAKindKickers.Add(hand[0]);
                 threeOfAKindKickers.Add(hand[4]);
+                threeOfAKindKickers.Add(hand[0]);
                 threeOfAKindKickers = sortDescending(threeOfAKindKickers);
                 threeOfAKind = hand[1].cardValue;
             }
             if (hand[2].cardValue == hand[3].cardValue && hand[2].cardValue == hand[4].cardValue) {
-                threeOfAKindKickers.Add(hand[0]);
                 threeOfAKindKickers.Add(hand[1]);
+                threeOfAKindKickers.Add(hand[0]);
                 threeOfAKindKickers = sortDescending(threeOfAKindKickers);
                 threeOfAKind = hand[2].cardValue;
             }
@@ -144,15 +145,27 @@ namespace CardGame {
             int onePair = 0;
             if (hand[0].cardValue == hand[1].cardValue) {
                 onePair = hand[0].cardValue;
+                onePairKickers.Add(hand[4]);
+                onePairKickers.Add(hand[3]);
+                onePairKickers.Add(hand[2]);
             }
             if (hand[1].cardValue == hand[2].cardValue) {
                 onePair = hand[1].cardValue;
+                onePairKickers.Add(hand[4]);
+                onePairKickers.Add(hand[3]);
+                onePairKickers.Add(hand[0]);
             }
             if (hand[2].cardValue == hand[3].cardValue) {
                 onePair = hand[2].cardValue;
+                onePairKickers.Add(hand[4]);
+                onePairKickers.Add(hand[1]);
+                onePairKickers.Add(hand[0]);
             }
             if (hand[3].cardValue == hand[4].cardValue) {
                 onePair = hand[3].cardValue;
+                onePairKickers.Add(hand[2]);
+                onePairKickers.Add(hand[1]);
+                onePairKickers.Add(hand[0]);
             }
             return onePair;
         }

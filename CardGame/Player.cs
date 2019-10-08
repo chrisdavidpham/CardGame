@@ -20,9 +20,9 @@ namespace CardGame {
             }
             string handString = "";
             for (int i = 0; i < 4; i++) {
-                handString += hand.At(i).cardSuit + "-" + hand.At(i).cardValue + ", ";
+                handString += hand.at(i).cardSuit + "-" + hand.at(i).cardValue + ", ";
             }
-            handString += hand.At(4).cardSuit + "-" + hand.At(4).cardValue;
+            handString += hand.at(4).cardSuit + "-" + hand.at(4).cardValue;
             return handString;
         }
     }
