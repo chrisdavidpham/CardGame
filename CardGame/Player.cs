@@ -13,6 +13,10 @@ namespace CardGame {
             name = playerName;
             hand = new Hand(cardList);
         }
+        public Player(string playerName, Hand hand) {
+            name = playerName;
+            this.hand = hand;
+        }
 
         public string getHandString() {
             if (hand.getCount() < 5) {

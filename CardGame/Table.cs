@@ -6,19 +6,31 @@ using System.Threading.Tasks;
 
 namespace CardGame {
     public class Table {
-        private List<Player> players;
-        private List<Player> fourOfAKindPlayers;
-        private List<Player> straightFlushPlayers;
-        private List<Player> straightPlayers;
-        private List<Player> flushPlayers;
-        private List<Player> fullHousePlayers;
-        private List<Player> threeOfAKindPlayers;
-        private List<Player> twoPairPlayers;
-        private List<Player> onePairPlayers;
-        private List<Player> highCardPlayers;
+        public List<Player> players;
+        public List<Player> fourOfAKindPlayers;
+        public List<Player> straightFlushPlayers;
+        public List<Player> straightPlayers;
+        public List<Player> flushPlayers;
+        public List<Player> fullHousePlayers;
+        public List<Player> threeOfAKindPlayers;
+        public List<Player> twoPairPlayers;
+        public List<Player> onePairPlayers;
+        public List<Player> highCardPlayers;
+        public Player winningPlayer;
+        public List<Player> tiePlayers;
 
         public Table(List<Player> playerList) {
             players = playerList;
+            fourOfAKindPlayers = new List<Player>();
+            straightFlushPlayers = new List<Player>();
+            straightPlayers = new List<Player>();
+            flushPlayers = new List<Player>();
+            fullHousePlayers = new List<Player>();
+            threeOfAKindPlayers = new List<Player>();
+            twoPairPlayers = new List<Player>();
+            onePairPlayers = new List<Player>();
+            highCardPlayers = new List<Player>();
+            tiePlayers = new List<Player>();
         }
 
         // return 0 if tie, 1 if cardList1 wins, 2 if cardList2 wins
@@ -27,12 +39,14 @@ namespace CardGame {
             if(cardList1.Count != cardList2.Count) {
                 throw new ArgumentException("card lists must be same size");
             }
-            for (int i=0; i<hand1.Count; i++) {
+            for (int i=0; i<cardList1.Count; i++) {
                 if (cardList1[i].cardValue > cardList2[i].cardValue) {
                     winner = 1;
+                    break;
                 }
                 if (cardList1[i].cardValue < cardList2[i].cardValue) {
                     winner = 2;
+                    break;
                 }
             }
             return winner;
@@ -70,7 +84,6 @@ namespace CardGame {
 
             // assume winner is index 0 and prove
             int winner = 0;
-            List<int> tieWinners = new List<int>;
 
             // Four of a Kind
             if (fourOfAKindPlayers.Count > 0) {
@@ -80,22 +93,43 @@ namespace CardGame {
                         winner = i + 1;
                     }
                 }
-
-                for (int i = 0; i + 1 < fourOfAKindPlayers.Count; i++) {
+                winningPlayer = fourOfAKindPlayers[winner];
+                // Don't need to check for tiebreakers, not possible to tie with four of a kind
+            }
+            else if (straightFlushPlayers.Count > 0) {
+                for (int i = 0; i + 1 < straightFlushPlayers.Count; i++) {
+                    int kickerFlag = evaluateKickerWinner(players[winner].hand.straightKickers, players[i + 1].hand.straightKickers);
+                    if (2 == kickerFlag) {
+                        winner = i + 1;
+                    }
+                }
+                // check for tied hands
+                for (int i = 0; i < straightFlushPlayers.Count; i++) {
+                    // Skip compare with self
                     if (i == winner) {
                         continue;
                     }
+                    // Assume winner and player[i] have tied hands and test
                     bool tie = true;
                     for (int j = 0; j < 5; j++) {
-                        if (players[winner].hand.at(j) != players[winner].hand.at(j)) {
+                        int val1 = straightFlushPlayers[winner].hand.straightKickers[j].cardValue;
+                        int val2 = straightFlushPlayers[i].hand.straightKickers[j].cardValue;
+                        if (val1 != val2) {
                             tie = false;
                             break;
                         }
-                    } 
+                    }
                     if (tie) {
-                        tieWinners.Add(i);
+                        tiePlayers.Add(straightFlushPlayers[i]);
                     }
                 }
+                if(tiePlayers.Count > 0) {
+                    tiePlayers.Add(straightFlushPlayers[winner]);
+                }
+                else {
+                    winningPlayer = straightFlushPlayers[winner];
+                }
+
             }
             // Straight Flush
             // Straight
