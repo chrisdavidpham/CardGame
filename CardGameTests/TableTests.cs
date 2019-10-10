@@ -29,16 +29,6 @@ namespace CardGameTests {
             Hand h = new Hand(cardList);
             return h;
         }
-        public Hand newFullHouseHand(int offset) {
-            List<Card> cardList = new List<Card>();
-            cardList.Add(new Card(2 + offset, 1));
-            cardList.Add(new Card(2 + offset, 2));
-            cardList.Add(new Card(2 + offset, 3));
-            cardList.Add(new Card(3 + offset, 4));
-            cardList.Add(new Card(3 + offset, 1));
-            Hand h = new Hand(cardList);
-            return h;
-        }
         public Hand newFlushHand(int offset, int suit) {
             List<Card> cardList = new List<Card>();
             cardList.Add(new Card(2 + offset, suit));
@@ -132,9 +122,9 @@ namespace CardGameTests {
         }
         public Table newFullHouseTableWinner() {
             List<Player> playerList = new List<Player>();
-            Hand hand1 = newFullHouseHand(0);
-            Hand hand2 = newFullHouseHand(4);
-            Hand hand3 = newFullHouseHand(2);
+            Hand hand1 = newHand(2,2,2,3,3);
+            Hand hand2 = newHand(14,14,12,12,12);
+            Hand hand3 = newHand(11,11,11,14,14);
             Player player1 = new Player("player1", hand1);
             Player player2 = new Player("player2", hand2);
             Player player3 = new Player("player3", hand3);
