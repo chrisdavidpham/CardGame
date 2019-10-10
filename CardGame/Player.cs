@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CardGame {
     public class Player {
-        public Hand hand;
-        public string name;
+        public Hand hand { get; private set; }
+        public string name { get; private set; }
 
         public Player(string playerName, List<Card> cardList) {
             name = playerName;

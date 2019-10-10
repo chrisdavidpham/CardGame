@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace CardGame {
     public class Table {
-        public List<Player> players;
-        public List<Player> fourOfAKindPlayers;
-        public List<Player> straightFlushPlayers;
-        public List<Player> straightPlayers;
-        public List<Player> flushPlayers;
-        public List<Player> fullHousePlayers;
-        public List<Player> threeOfAKindPlayers;
-        public List<Player> twoPairPlayers;
-        public List<Player> onePairPlayers;
-        public List<Player> highCardPlayers;
-        public Player winningPlayer;
-        public List<Player> tiePlayers;
+        public List<Player> players { get; private set; }
+        public List<Player> fourOfAKindPlayers { get; private set; }
+        public List<Player> straightFlushPlayers { get; private set; }
+        public List<Player> straightPlayers { get; private set; }
+        public List<Player> flushPlayers { get; private set; }
+        public List<Player> fullHousePlayers { get; private set; }
+        public List<Player> threeOfAKindPlayers { get; private set; }
+        public List<Player> twoPairPlayers { get; private set; }
+        public List<Player> onePairPlayers { get; private set; }
+        public List<Player> highCardPlayers { get; private set; }
+        public Player winningPlayer { get; private set; }
+        public List<Player> tiePlayers { get; private set; }
 
         public Table(List<Player> playerList) {
             players = playerList;

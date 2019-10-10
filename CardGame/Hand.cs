@@ -7,21 +7,21 @@ using System.Threading.Tasks;
 namespace CardGame {
     public class Hand {
         private List<Card> hand;
-        public List<Card> fourOfAKindKickers;
-        public List<Card> straightKickers;
-        public List<Card> flushKickers;
-        public List<Card> fullHouseKickers;
-        public List<Card> threeOfAKindKickers;
-        public List<Card> twoPairKickers;
-        public List<Card> onePairKickers;
-        public List<Card> highCardKickers;
-        public bool isFourOfAKind;
-        public bool isStraight;
-        public bool isFlush;
-        public bool isFullHouse;
-        public bool isThreeOfAKind;
-        public bool isTwoPair;
-        public bool isOnePair;
+        public List<Card> fourOfAKindKickers { get; private set; }
+        public List<Card> straightKickers { get; private set; }
+        public List<Card> flushKickers { get; private set; }
+        public List<Card> fullHouseKickers { get; private set; }
+        public List<Card> threeOfAKindKickers { get; private set; }
+        public List<Card> twoPairKickers { get; private set; }
+        public List<Card> onePairKickers { get; private set; }
+        public List<Card> highCardKickers { get; private set; }
+        public bool isFourOfAKind { get; private set; }
+        public bool isStraight { get; private set; }
+        public bool isFlush { get; private set; }
+        public bool isFullHouse { get; private set; }
+        public bool isThreeOfAKind { get; private set; }
+        public bool isTwoPair { get; private set; }
+        public bool isOnePair { get; private set; }
 
         public Hand(List<Card> cardList) {
             hand = cardList;

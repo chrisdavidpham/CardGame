@@ -41,7 +41,7 @@ namespace CardGame {
             Table table = new Table(players);
             table.evaluateWinner();
 
-            Console.WriteLine("Welcome players");
+            Console.WriteLine("Welcome players. Cards are represented as Value-Suit");
             for (int i = 0; i < players.Count; i++) {
                 Console.WriteLine(players[i].name + " :");
 
