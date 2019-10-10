@@ -91,7 +91,7 @@ namespace CardGame {
             // Straight Flush
             if (straightFlushPlayers.Count > 0) {
                 for (int i = 0; i + 1 < straightFlushPlayers.Count; i++) {
-                    int kickerFlag = evaluateKickerWinner(players[winner].hand.straightKickers, players[i + 1].hand.straightKickers);
+                    int kickerFlag = evaluateKickerWinner(straightFlushPlayers[winner].hand.straightKickers, straightFlushPlayers[i + 1].hand.straightKickers);
                     if (2 == kickerFlag) {
                         winner = i + 1;
                     }
@@ -126,7 +126,7 @@ namespace CardGame {
             // Four of a Kind
             else if (fourOfAKindPlayers.Count > 0) {
                 for (int i = 0; i + 1 < fourOfAKindPlayers.Count; i++) {
-                    int kickerFlag = evaluateKickerWinner(players[winner].hand.fourOfAKindKickers, players[i + 1].hand.fourOfAKindKickers);
+                    int kickerFlag = evaluateKickerWinner(fourOfAKindPlayers[winner].hand.fourOfAKindKickers, fourOfAKindPlayers[i + 1].hand.fourOfAKindKickers);
                     if (2 == kickerFlag) {
                         winner = i + 1;
                     }
@@ -137,7 +137,7 @@ namespace CardGame {
             // Full House
             else if (fullHousePlayers.Count > 0) {
                 for (int i = 0; i + 1 < fullHousePlayers.Count; i++) {
-                    int kickerFlag = evaluateKickerWinner(players[winner].hand.fullHouseKickers, players[i + 1].hand.fullHouseKickers);
+                    int kickerFlag = evaluateKickerWinner(fullHousePlayers[winner].hand.fullHouseKickers, fullHousePlayers[i + 1].hand.fullHouseKickers);
                     if (2 == kickerFlag) {
                         winner = i + 1;
                     }
@@ -148,7 +148,7 @@ namespace CardGame {
             // Flush
             else if (flushPlayers.Count > 0) {
                 for (int i = 0; i + 1 < flushPlayers.Count; i++) {
-                    int kickerFlag = evaluateKickerWinner(players[winner].hand.flushKickers, players[i + 1].hand.flushKickers);
+                    int kickerFlag = evaluateKickerWinner(flushPlayers[winner].hand.flushKickers, flushPlayers[i + 1].hand.flushKickers);
                     if (2 == kickerFlag) {
                         winner = i + 1;
                     }
@@ -183,7 +183,7 @@ namespace CardGame {
             // Straight
             else if (straightPlayers.Count > 0) {
                 for (int i = 0; i + 1 < straightPlayers.Count; i++) {
-                    int kickerFlag = evaluateKickerWinner(players[winner].hand.straightKickers, players[i + 1].hand.straightKickers);
+                    int kickerFlag = evaluateKickerWinner(straightPlayers[winner].hand.straightKickers, straightPlayers[i + 1].hand.straightKickers);
                     if (2 == kickerFlag) {
                         winner = i + 1;
                     }
@@ -218,7 +218,7 @@ namespace CardGame {
             // Three of a Kind
             else if (threeOfAKindPlayers.Count > 0) {
                 for (int i = 0; i + 1 < threeOfAKindPlayers.Count; i++) {
-                    int kickerFlag = evaluateKickerWinner(players[winner].hand.threeOfAKindKickers, players[i + 1].hand.threeOfAKindKickers);
+                    int kickerFlag = evaluateKickerWinner(threeOfAKindPlayers[winner].hand.threeOfAKindKickers, threeOfAKindPlayers[i + 1].hand.threeOfAKindKickers);
                     if (2 == kickerFlag) {
                         winner = i + 1;
                     }
@@ -229,7 +229,7 @@ namespace CardGame {
             // Two Pair
             else if (twoPairPlayers.Count > 0) {
                 for (int i = 0; i + 1 < twoPairPlayers.Count; i++) {
-                    int kickerFlag = evaluateKickerWinner(players[winner].hand.twoPairKickers, players[i + 1].hand.twoPairKickers);
+                    int kickerFlag = evaluateKickerWinner(twoPairPlayers[winner].hand.twoPairKickers, twoPairPlayers[i + 1].hand.twoPairKickers);
                     if (2 == kickerFlag) {
                         winner = i + 1;
                     }
@@ -264,7 +264,7 @@ namespace CardGame {
             // One Pair
             else if (onePairPlayers.Count > 0) {
                 for (int i = 0; i + 1 < onePairPlayers.Count; i++) {
-                    int kickerFlag = evaluateKickerWinner(players[winner].hand.onePairKickers, players[i + 1].hand.onePairKickers);
+                    int kickerFlag = evaluateKickerWinner(onePairPlayers[winner].hand.onePairKickers, onePairPlayers[i + 1].hand.onePairKickers);
                     if (2 == kickerFlag) {
                         winner = i + 1;
                     }
@@ -299,7 +299,7 @@ namespace CardGame {
             // High Card
             else if (highCardPlayers.Count > 0) {
                 for (int i = 0; i + 1 < highCardPlayers.Count; i++) {
-                    int kickerFlag = evaluateKickerWinner(players[winner].hand.highCardKickers, players[i + 1].hand.highCardKickers);
+                    int kickerFlag = evaluateKickerWinner(highCardPlayers[winner].hand.highCardKickers, highCardPlayers[i + 1].hand.highCardKickers);
                     if (2 == kickerFlag) {
                         winner = i + 1;
                     }

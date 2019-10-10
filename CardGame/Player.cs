@@ -24,9 +24,9 @@ namespace CardGame {
             }
             string handString = "";
             for (int i = 0; i < 4; i++) {
-                handString += hand.at(i).cardSuit + "-" + hand.at(i).cardValue + ", ";
+                handString += hand.at(i).cardValue + "-" + hand.at(i).cardSuit + ", ";
             }
-            handString += hand.at(4).cardSuit + "-" + hand.at(4).cardValue;
+            handString += hand.at(4).cardValue + "-" + hand.at(4).cardSuit;
             return handString;
         }
     }

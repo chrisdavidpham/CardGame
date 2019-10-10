@@ -38,40 +38,54 @@ namespace CardGame {
                 return 0;
             }
 
+            Table table = new Table(players);
+            table.evaluateWinner();
+
             Console.WriteLine("Welcome players");
             for (int i = 0; i < players.Count; i++) {
-                Console.WriteLine(players[i].name + " : " + players[i].getHandString());
+                Console.WriteLine(players[i].name + " :");
 
                 if (players[i].hand.isFourOfAKind) {
-                    Console.WriteLine("Four of a kind");
+                    Console.WriteLine(players[i].getHandString() + " - Four of a kind");
                 }
                 else if (players[i].hand.isStraight && players[i].hand.isFlush) {
-                    Console.WriteLine("Straight flush");
+                    Console.WriteLine(players[i].getHandString() + " - Straight flush");
                 }
                 else if (players[i].hand.isFlush) {
-                    Console.WriteLine("Flush");
+                    Console.WriteLine(players[i].getHandString() + " - Flush");
                 }
                 else if (players[i].hand.isStraight) {
-                    Console.WriteLine("Straight");
+                    Console.WriteLine(players[i].getHandString() + " - Straight");
                 }
                 else if (players[i].hand.isFullHouse) {
-                    Console.WriteLine("Full House");
+                    Console.WriteLine(players[i].getHandString() + " - Full House");
                 }
                 else if (players[i].hand.isThreeOfAKind) {
-                    Console.WriteLine("Three of a Kind");
+                    Console.WriteLine(players[i].getHandString() + " - Three of a Kind");
                 }
                 else if (players[i].hand.isTwoPair) {
-                    Console.WriteLine("Two Pair");
+                    Console.WriteLine(players[i].getHandString() + " - Two Pair");
                 }
                 else if (players[i].hand.isOnePair) {
-                    Console.WriteLine("One Pair");
+                    Console.WriteLine(players[i].getHandString() + " - One Pair");
                 }
                 else {
-                    Console.WriteLine("High card");
+                    Console.WriteLine(players[i].getHandString() + " - High card");
                 }
             }
 
-            Console.WriteLine("Done! Press enter to continue");
+            if (table.tiePlayers.Count > 0) {
+                Console.WriteLine("It's a tie between these players");
+                for(int i=0; i<table.tiePlayers.Count; i++) {
+                    Console.WriteLine(table.tiePlayers[i].name);
+                }
+            }
+            else {
+                String winner = table.winningPlayer.name;
+                Console.WriteLine("The winner is " + winner);
+            }
+
+            Console.WriteLine("Press enter to continue");
             Console.ReadLine();
             return 0;
         }
