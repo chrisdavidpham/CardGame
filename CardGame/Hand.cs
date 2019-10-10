@@ -6,27 +6,33 @@ using System.Threading.Tasks;
 
 namespace CardGame {
     public class Hand {
-        List<Card> hand;
-        List<Card> fourOfAKindKickers;
-        List<Card> straightKickers;
-        List<Card> flushKickers;
-        List<Card> threeOfAKindKickers;
-        List<Card> twoPairKickers;
-        public bool isFourOfAKind;
-        public bool isStraight;
-        public bool isFlush;
-        public bool isFullHouse;
-        public bool isThreeOfAKind;
-        public bool isTwoPair;
-        public bool isOnePair;
+        private List<Card> hand;
+        public List<Card> fourOfAKindKickers { get; private set; }
+        public List<Card> straightKickers { get; private set; }
+        public List<Card> flushKickers { get; private set; }
+        public List<Card> fullHouseKickers { get; private set; }
+        public List<Card> threeOfAKindKickers { get; private set; }
+        public List<Card> twoPairKickers { get; private set; }
+        public List<Card> onePairKickers { get; private set; }
+        public List<Card> highCardKickers { get; private set; }
+        public bool isFourOfAKind { get; private set; }
+        public bool isStraight { get; private set; }
+        public bool isFlush { get; private set; }
+        public bool isFullHouse { get; private set; }
+        public bool isThreeOfAKind { get; private set; }
+        public bool isTwoPair { get; private set; }
+        public bool isOnePair { get; private set; }
 
         public Hand(List<Card> cardList) {
             hand = cardList;
             fourOfAKindKickers = new List<Card>();
             straightKickers = new List<Card>();
             flushKickers = new List<Card>();
+            fullHouseKickers = new List<Card>();
             threeOfAKindKickers = new List<Card>();
             twoPairKickers = new List<Card>();
+            onePairKickers = new List<Card>();
+            highCardKickers = new List<Card>();
             isFourOfAKind = false;
             isStraight = false;
             isFlush = false;
@@ -34,20 +40,23 @@ namespace CardGame {
             isThreeOfAKind = false;
             isTwoPair = false;
             isOnePair = false;
-            sortAscending();
-            evaluateHand();
+            hand = sortAscending(hand);
         }
 
         public int getCount() {
             return hand.Count;
         }
 
-        public void sortAscending() {
-            hand.Sort(delegate (Card c1, Card c2) { return c1.cardValue.CompareTo(c2.cardValue); });
-            return;
+        private List<Card> sortAscending(List<Card> cardList) {
+            cardList.Sort(delegate (Card c1, Card c2) { return c1.cardValue.CompareTo(c2.cardValue); });
+            return cardList;
+        }
+        private List<Card> sortDescending(List<Card> cardList) {
+            cardList.Sort(delegate (Card c1, Card c2) { return c2.cardValue.CompareTo(c1.cardValue); });
+            return cardList;
         }
 
-        public Card At(int index) {
+        public Card at(int index) {
             if (index < 0 || index > 4) {
                 throw new IndexOutOfRangeException();
             }
@@ -55,20 +64,18 @@ namespace CardGame {
         }
 
         // get value of four of a kind, 0 if not applicable
-        public int getFourOfAKind() {
-            int val = 0;
+        public void getFourOfAKind() {
             if (hand[0].cardValue == hand[1].cardValue && hand[0].cardValue == hand[2].cardValue && hand[0].cardValue == hand[3].cardValue) {
-                val = hand[0].cardValue;
+                fourOfAKindKickers.Add(hand[0]);
                 fourOfAKindKickers.Add(hand[4]);
             }
             if (hand[1].cardValue == hand[2].cardValue && hand[1].cardValue == hand[3].cardValue && hand[1].cardValue == hand[4].cardValue) {
-                val = hand[1].cardValue;
+                fourOfAKindKickers.Add(hand[1]);
                 fourOfAKindKickers.Add(hand[0]);
             }
-            return val;
         }
 
-        public int getStraight() {
+        public void getStraight() {
             bool straight = true;
             for (int i = 0; i < 4; i++) {
                 if (hand[i].cardValue + 1 != hand[i + 1].cardValue) {
@@ -77,72 +84,79 @@ namespace CardGame {
                 }
             }
             if (straight) {
+                straightKickers.Add(hand[4]);
                 straightKickers.Add(hand[3]);
                 straightKickers.Add(hand[2]);
                 straightKickers.Add(hand[1]);
                 straightKickers.Add(hand[0]);
-                return hand[4].cardValue;
-            }
-            else {
-                return 0;
             }
         }
 
-        public int getFlush() {
+        public void getFlush() {
             if (hand[0].cardSuit == hand[1].cardSuit && hand[0].cardSuit == hand[2].cardSuit && hand[0].cardSuit == hand[3].cardSuit && hand[0].cardSuit == hand[4].cardSuit) {
-                return hand[4].cardValue;
+                for(int i=4; i>=0; i--) {
+                    flushKickers.Add(hand[i]);
+                }
             }
-            return 0;
         }
 
-        public int getFullHouse() {
-            bool fullHouse = false;
+        public void getFullHouse() {
             if (hand[0].cardValue == hand[1].cardValue && hand[0].cardValue == hand[2].cardValue && hand[3].cardValue == hand[4].cardValue) {
-                fullHouse = true;
+                fullHouseKickers.Add(hand[0]);
+                fullHouseKickers.Add(hand[3]);
             }
             if (hand[0].cardValue == hand[1].cardValue && hand[2].cardValue == hand[3].cardValue && hand[2].cardValue == hand[4].cardValue) {
-                fullHouse = true;
-            }
-            if (fullHouse) {
-                return hand[4].cardValue;
-            }
-            else {
-                return 0;
+                fullHouseKickers.Add(hand[2]);
+                fullHouseKickers.Add(hand[0]);
             }
         }
 
-        public int getThreeOfAKind() {
-            int threeOfAKind = 0;
+        public void getThreeOfAKind() {
             if (hand[0].cardValue == hand[1].cardValue && hand[0].cardValue == hand[2].cardValue) {
-                threeOfAKind = hand[0].cardValue;
+                threeOfAKindKickers.Add(hand[0]);
+                threeOfAKindKickers.Add(hand[3]);
+                threeOfAKindKickers.Add(hand[4]);
             }
             if (hand[1].cardValue == hand[2].cardValue && hand[1].cardValue == hand[3].cardValue) {
-                threeOfAKind = hand[1].cardValue;
+                threeOfAKindKickers.Add(hand[1]);
+                threeOfAKindKickers.Add(hand[4]);
+                threeOfAKindKickers.Add(hand[0]);
             }
             if (hand[2].cardValue == hand[3].cardValue && hand[2].cardValue == hand[4].cardValue) {
-                threeOfAKind = hand[2].cardValue;
+                threeOfAKindKickers.Add(hand[2]);
+                threeOfAKindKickers.Add(hand[1]);
+                threeOfAKindKickers.Add(hand[0]);
             }
-            return threeOfAKind;
         }
 
-        public int getOnePair() {
-            int onePair = 0;
+        public void getOnePair() {
             if (hand[0].cardValue == hand[1].cardValue) {
-                onePair = hand[0].cardValue;
+                onePairKickers.Add(hand[0]);
+                onePairKickers.Add(hand[4]);
+                onePairKickers.Add(hand[3]);
+                onePairKickers.Add(hand[2]);
             }
             if (hand[1].cardValue == hand[2].cardValue) {
-                onePair = hand[1].cardValue;
+                onePairKickers.Add(hand[1]);
+                onePairKickers.Add(hand[4]);
+                onePairKickers.Add(hand[3]);
+                onePairKickers.Add(hand[0]);
             }
             if (hand[2].cardValue == hand[3].cardValue) {
-                onePair = hand[2].cardValue;
+                onePairKickers.Add(hand[2]);
+                onePairKickers.Add(hand[4]);
+                onePairKickers.Add(hand[1]);
+                onePairKickers.Add(hand[0]);
             }
             if (hand[3].cardValue == hand[4].cardValue) {
-                onePair = hand[3].cardValue;
+                onePairKickers.Add(hand[3]);
+                onePairKickers.Add(hand[2]);
+                onePairKickers.Add(hand[1]);
+                onePairKickers.Add(hand[0]);
             }
-            return onePair;
         }
 
-        public int getTwoPair() {
+        public void getTwoPair() {
             // store card values of each pair and kicker card in last index
             Card[] twoPair = new Card[3];
             if (hand[0].cardValue == hand[1].cardValue && hand[2].cardValue == hand[3].cardValue) {
@@ -162,53 +176,53 @@ namespace CardGame {
             }
 
             if (twoPair[0] != null && twoPair[1] != null && twoPair[2] != null) {
-                // sort descending
+                // sort pairs descending
                 if (twoPair[0].cardValue < twoPair[1].cardValue) {
                     Card temp = twoPair[0];
                     twoPair[0] = twoPair[1];
                     twoPair[1] = temp;
                 }
+                twoPairKickers.Add(twoPair[0]);
                 twoPairKickers.Add(twoPair[1]);
                 twoPairKickers.Add(twoPair[2]);
-                return twoPair[0].cardValue;
-            }
-            else {
-                return 0;
             }
         }
 
-        public int getHighCard() {
-            return hand[4].cardValue;
+        public void getHighCard() {
+            for (int i=4; i>=0; i--) {
+                highCardKickers.Add(hand[i]);
+            }
         }
 
         public void evaluateHand() {
-            int fourOfAKind = getFourOfAKind();
-            int straight = getStraight();
-            int flush = getFlush();
-            int fullHouse = getFullHouse();
-            int threeOfAKind = getThreeOfAKind();
-            int twoPair = getTwoPair();
-            int onePair = getOnePair();
-            
-            if(fourOfAKind > 0) {
+            getFourOfAKind();
+            getStraight();
+            getFlush();
+            getFullHouse();
+            getThreeOfAKind();
+            getTwoPair();
+            getOnePair();
+            getHighCard();
+
+            if(fourOfAKindKickers.Count > 0) {
                 isFourOfAKind = true;
             }
-            if(straight > 0) {
+            if(straightKickers.Count > 0) {
                 isStraight = true;
             }
-            if(flush > 0) {
+            if(flushKickers.Count > 0) {
                 isFlush = true;
             }
-            if(fullHouse > 0) {
+            if(fullHouseKickers.Count > 0) {
                 isFullHouse = true;
             }
-            if(threeOfAKind > 0) {
+            if(threeOfAKindKickers.Count > 0) {
                 isThreeOfAKind = true;
             } 
-            if (twoPair > 0) {
+            if (twoPairKickers.Count > 0) {
                 isTwoPair = true;
             }
-            if (onePair > 0) {
+            if (onePairKickers.Count > 0) {
                 isOnePair = true;
             }
         }

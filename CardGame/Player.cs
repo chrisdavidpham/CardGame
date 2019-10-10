@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 
 namespace CardGame {
     public class Player {
-        public Hand hand;
-        public string name;
+        public Hand hand { get; private set; }
+        public string name { get; private set; }
 
         public Player(string playerName, List<Card> cardList) {
             name = playerName;
             hand = new Hand(cardList);
+        }
+        public Player(string playerName, Hand hand) {
+            name = playerName;
+            this.hand = hand;
         }
 
         public string getHandString() {
@@ -20,9 +24,9 @@ namespace CardGame {
             }
             string handString = "";
             for (int i = 0; i < 4; i++) {
-                handString += hand.At(i).cardSuit + "-" + hand.At(i).cardValue + ", ";
+                handString += hand.at(i).cardValue + "-" + hand.at(i).cardSuit + ", ";
             }
-            handString += hand.At(4).cardSuit + "-" + hand.At(4).cardValue;
+            handString += hand.at(4).cardValue + "-" + hand.at(4).cardSuit;
             return handString;
         }
     }
