@@ -1,5 +1,5 @@
 # CardGame
-Players are given five random cards, and the program will determine what poker hand each player has.
+Players are given five random cards, and the program will determine what poker hand each player has. The program will tell who has the winning hand or if one or more players ties for a winning hand.
 
 The names of the players are to be provided in a text file with names delimited by new lines. 
 
