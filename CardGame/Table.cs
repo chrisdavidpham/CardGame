@@ -33,7 +33,7 @@ namespace CardGame {
             tiePlayers = new List<Player>();
         }
 
-        // return 0 if tie, 1 if cardList1 wins, 2 if cardList2 wins
+        // Return 0 if tie, 1 if cardList1 wins, 2 if cardList2 wins.
         public int evaluateKickerWinner(List<Card> cardList1, List<Card> cardList2) {
             int winner = 0;
             if(cardList1.Count != cardList2.Count) {
@@ -53,7 +53,7 @@ namespace CardGame {
         }
 
         public void evaluateWinner() {
-            // Populate possible winning player hands
+            // Populate possible winning player hands.
             for (int i=0; i<players.Count; i++) {
                 players[i].hand.evaluateHand();
                 if (players[i].hand.isFourOfAKind) {
@@ -85,10 +85,9 @@ namespace CardGame {
                 }
             }
 
-            // assume winner is index 0 and prove
+            // Assume winner is index 0 and test.
             int winner = 0;
 
-            // Straight Flush
             if (straightFlushPlayers.Count > 0) {
                 for (int i = 0; i + 1 < straightFlushPlayers.Count; i++) {
                     int kickerFlag = evaluateKickerWinner(straightFlushPlayers[winner].hand.straightKickers, straightFlushPlayers[i + 1].hand.straightKickers);
@@ -96,13 +95,13 @@ namespace CardGame {
                         winner = i + 1;
                     }
                 }
-                // check for tied hands
+                // Check for tied hands.
                 for (int i = 0; i < straightFlushPlayers.Count; i++) {
-                    // Skip compare with self
+                    // Skip compare with self.
                     if (i == winner) {
                         continue;
                     }
-                    // Assume winner and player[i] have tied hands and test
+                    // Assume winner and player[i] have tied hands and test.
                     bool tie = true;
                     for (int j = 0; j < straightFlushPlayers[winner].hand.straightKickers.Count; j++) {
                         int val1 = straightFlushPlayers[winner].hand.straightKickers[j].cardValue;
@@ -123,7 +122,6 @@ namespace CardGame {
                     winningPlayer = straightFlushPlayers[winner];
                 }
             }
-            // Four of a Kind
             else if (fourOfAKindPlayers.Count > 0) {
                 for (int i = 0; i + 1 < fourOfAKindPlayers.Count; i++) {
                     int kickerFlag = evaluateKickerWinner(fourOfAKindPlayers[winner].hand.fourOfAKindKickers, fourOfAKindPlayers[i + 1].hand.fourOfAKindKickers);
@@ -132,9 +130,8 @@ namespace CardGame {
                     }
                 }
                 winningPlayer = fourOfAKindPlayers[winner];
-                // Don't need to check for tiebreakers, not possible to tie with four of a kind
+                // Don't need to check for tiebreakers because it's not possible to tie with four of a kind.
             }
-            // Full House
             else if (fullHousePlayers.Count > 0) {
                 for (int i = 0; i + 1 < fullHousePlayers.Count; i++) {
                     int kickerFlag = evaluateKickerWinner(fullHousePlayers[winner].hand.fullHouseKickers, fullHousePlayers[i + 1].hand.fullHouseKickers);
@@ -142,10 +139,9 @@ namespace CardGame {
                         winner = i + 1;
                     }
                 }
-                // Don't need to check for tiebreakers, not possible to tie with Full 
+                // Don't need to check for tiebreakers because it's not possible to tie with full house.
                 winningPlayer = fullHousePlayers[winner];
             }
-            // Flush
             else if (flushPlayers.Count > 0) {
                 for (int i = 0; i + 1 < flushPlayers.Count; i++) {
                     int kickerFlag = evaluateKickerWinner(flushPlayers[winner].hand.flushKickers, flushPlayers[i + 1].hand.flushKickers);
@@ -153,13 +149,13 @@ namespace CardGame {
                         winner = i + 1;
                     }
                 }
-                // check for tied hands
+                // Check for tied hands.
                 for (int i = 0; i < flushPlayers.Count; i++) {
-                    // Skip compare with self
+                    // Skip compare with self.
                     if (i == winner) {
                         continue;
                     }
-                    // Assume winner and player[i] have tied hands and test
+                    // Assume winner and player[i] have tied hands and test.
                     bool tie = true;
                     for (int j = 0; j < flushPlayers[winner].hand.flushKickers.Count; j++) {
                         int val1 = flushPlayers[winner].hand.flushKickers[j].cardValue;
@@ -180,7 +176,6 @@ namespace CardGame {
                     winningPlayer = flushPlayers[winner];
                 }
             }
-            // Straight
             else if (straightPlayers.Count > 0) {
                 for (int i = 0; i + 1 < straightPlayers.Count; i++) {
                     int kickerFlag = evaluateKickerWinner(straightPlayers[winner].hand.straightKickers, straightPlayers[i + 1].hand.straightKickers);
@@ -188,13 +183,13 @@ namespace CardGame {
                         winner = i + 1;
                     }
                 }
-                // check for tied hands
+                // Check for tied hands.
                 for (int i = 0; i < straightPlayers.Count; i++) {
-                    // Skip compare with self
+                    // Skip compare with self.
                     if (i == winner) {
                         continue;
                     }
-                    // Assume winner and player[i] have tied hands and test
+                    // Assume winner and player[i] have tied hands and test.
                     bool tie = true;
                     for (int j = 0; j < straightPlayers[winner].hand.straightKickers.Count; j++) {
                         int val1 = straightPlayers[winner].hand.straightKickers[j].cardValue;
@@ -215,7 +210,6 @@ namespace CardGame {
                     winningPlayer = straightPlayers[winner];
                 }
             }
-            // Three of a Kind
             else if (threeOfAKindPlayers.Count > 0) {
                 for (int i = 0; i + 1 < threeOfAKindPlayers.Count; i++) {
                     int kickerFlag = evaluateKickerWinner(threeOfAKindPlayers[winner].hand.threeOfAKindKickers, threeOfAKindPlayers[i + 1].hand.threeOfAKindKickers);
@@ -224,9 +218,8 @@ namespace CardGame {
                     }
                 }
                 winningPlayer = threeOfAKindPlayers[winner];
-                // Don't need to check for tiebreakers, not possible to tie with four of a kind
+                // Don't need to check for tiebreakers because it's not possible to tie with three of a kind.
             }
-            // Two Pair
             else if (twoPairPlayers.Count > 0) {
                 for (int i = 0; i + 1 < twoPairPlayers.Count; i++) {
                     int kickerFlag = evaluateKickerWinner(twoPairPlayers[winner].hand.twoPairKickers, twoPairPlayers[i + 1].hand.twoPairKickers);
@@ -234,13 +227,13 @@ namespace CardGame {
                         winner = i + 1;
                     }
                 }
-                // check for tied hands
+                // Check for tied hands.
                 for (int i = 0; i < twoPairPlayers.Count; i++) {
-                    // Skip compare with self
+                    // Skip compare with self.
                     if (i == winner) {
                         continue;
                     }
-                    // Assume winner and player[i] have tied hands and test
+                    // Assume winner and player[i] have tied hands and test.
                     bool tie = true;
                     for (int j = 0; j < twoPairPlayers[winner].hand.twoPairKickers.Count; j++) {
                         int val1 = twoPairPlayers[winner].hand.twoPairKickers[j].cardValue;
@@ -269,13 +262,13 @@ namespace CardGame {
                         winner = i + 1;
                     }
                 }
-                // check for tied hands
+                // Check for tied hands.
                 for (int i = 0; i < onePairPlayers.Count; i++) {
-                    // Skip compare with self
+                    // Skip compare with self.
                     if (i == winner) {
                         continue;
                     }
-                    // Assume winner and player[i] have tied hands and test
+                    // Assume winner and player[i] have tied hands and test.
                     bool tie = true;
                     for (int j = 0; j < onePairPlayers[winner].hand.onePairKickers.Count; j++) {
                         int val1 = onePairPlayers[winner].hand.onePairKickers[j].cardValue;
@@ -304,13 +297,13 @@ namespace CardGame {
                         winner = i + 1;
                     }
                 }
-                // check for tied hands
+                // Check for tied hands.
                 for (int i = 0; i < highCardPlayers.Count; i++) {
-                    // Skip compare with self
+                    // Skip compare with self.
                     if (i == winner) {
                         continue;
                     }
-                    // Assume winner and player[i] have tied hands and test
+                    // Assume winner and player[i] have tied hands and test.
                     bool tie = true;
                     for (int j = 0; j < highCardPlayers[winner].hand.highCardKickers.Count; j++) {
                         int val1 = highCardPlayers[winner].hand.highCardKickers[j].cardValue;

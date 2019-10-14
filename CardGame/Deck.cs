@@ -12,6 +12,7 @@ namespace CardGame {
         public Deck() {
             cardList = new List<Card>();
 
+            // Add all 52 cards of a standard deck to cardList.
             for (int i = 1; i <= 4; i++) {
                 for (int j = 2; j <= 14; j++) {
                     cardList.Add(new Card(j, i));
@@ -19,7 +20,8 @@ namespace CardGame {
             }
         }
 
-        public Card getRandom() {
+        public Card drawRandomCard() {
+            // Get a Card from a random index in cardList, remove it from the cardList and return it.
             if (cardList.Count == 0) {
                 throw new System.InvalidOperationException("Empty deck");
             }

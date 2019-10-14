@@ -25,6 +25,9 @@ namespace CardGame {
 
         public Hand(List<Card> cardList) {
             hand = cardList;
+
+            // The kicker list stores the card values of a hand in descending order.
+            // Kickers are used to determine a winner in the event of a tie.
             fourOfAKindKickers = new List<Card>();
             straightKickers = new List<Card>();
             flushKickers = new List<Card>();
@@ -33,6 +36,7 @@ namespace CardGame {
             twoPairKickers = new List<Card>();
             onePairKickers = new List<Card>();
             highCardKickers = new List<Card>();
+
             isFourOfAKind = false;
             isStraight = false;
             isFlush = false;
@@ -57,14 +61,15 @@ namespace CardGame {
         }
 
         public Card at(int index) {
+            // Get one of the five cards in hand by index.
             if (index < 0 || index > 4) {
                 throw new IndexOutOfRangeException();
             }
             return hand[index];
         }
 
-        // get value of four of a kind, 0 if not applicable
-        public void getFourOfAKind() {
+        public void evaluateFourOfAKind() {
+            // Get the value of four of a kind and add it as the first kicker value. Add the remaining kicker card to kicker list.
             if (hand[0].cardValue == hand[1].cardValue && hand[0].cardValue == hand[2].cardValue && hand[0].cardValue == hand[3].cardValue) {
                 fourOfAKindKickers.Add(hand[0]);
                 fourOfAKindKickers.Add(hand[4]);
@@ -75,7 +80,8 @@ namespace CardGame {
             }
         }
 
-        public void getStraight() {
+        public void evaluateStraight() {
+            // Determine if card values form a straight
             bool straight = true;
             for (int i = 0; i < 4; i++) {
                 if (hand[i].cardValue + 1 != hand[i + 1].cardValue) {
@@ -84,23 +90,25 @@ namespace CardGame {
                 }
             }
             if (straight) {
-                straightKickers.Add(hand[4]);
-                straightKickers.Add(hand[3]);
-                straightKickers.Add(hand[2]);
-                straightKickers.Add(hand[1]);
-                straightKickers.Add(hand[0]);
+                // Hand is sorted in ascending order. Add cards to kicker list in descending order.
+                for (int i = 4; i >= 0; i--) {
+                    straightKickers.Add(hand[i]);
+                }
             }
         }
 
-        public void getFlush() {
+        public void evaluateFlush() {
+            // Check if all cards in hand are of the same suit.
             if (hand[0].cardSuit == hand[1].cardSuit && hand[0].cardSuit == hand[2].cardSuit && hand[0].cardSuit == hand[3].cardSuit && hand[0].cardSuit == hand[4].cardSuit) {
-                for(int i=4; i>=0; i--) {
+                // Hand is sorted in ascending order. Add cards to kicker list in descending order.
+                for (int i=4; i>=0; i--) {
                     flushKickers.Add(hand[i]);
                 }
             }
         }
 
-        public void getFullHouse() {
+        public void evaluateFullHouse() {
+            // Check for a full house hand and add the values of the three-of-a-kind to kickersfollowed by the value of the two pair.
             if (hand[0].cardValue == hand[1].cardValue && hand[0].cardValue == hand[2].cardValue && hand[3].cardValue == hand[4].cardValue) {
                 fullHouseKickers.Add(hand[0]);
                 fullHouseKickers.Add(hand[3]);
@@ -111,11 +119,13 @@ namespace CardGame {
             }
         }
 
-        public void getThreeOfAKind() {
+        public void evaluateThreeOfAKind() {
+            // Check for three-of-a-kind and add the three-of-a-kind value to kickers
+            // followed by the last two kicker cards in descending order.
             if (hand[0].cardValue == hand[1].cardValue && hand[0].cardValue == hand[2].cardValue) {
                 threeOfAKindKickers.Add(hand[0]);
-                threeOfAKindKickers.Add(hand[3]);
                 threeOfAKindKickers.Add(hand[4]);
+                threeOfAKindKickers.Add(hand[3]);
             }
             if (hand[1].cardValue == hand[2].cardValue && hand[1].cardValue == hand[3].cardValue) {
                 threeOfAKindKickers.Add(hand[1]);
@@ -129,7 +139,9 @@ namespace CardGame {
             }
         }
 
-        public void getOnePair() {
+        public void evaluateOnePair() {
+            // Check for one-pair and add the one-pair value to kickers followed by the
+            // last three kicker cards in descending order.
             if (hand[0].cardValue == hand[1].cardValue) {
                 onePairKickers.Add(hand[0]);
                 onePairKickers.Add(hand[4]);
@@ -156,8 +168,8 @@ namespace CardGame {
             }
         }
 
-        public void getTwoPair() {
-            // store card values of each pair and kicker card in last index
+        public void evaluateTwoPair() {
+            // Store the card values of each pair in indices one and two. Store kicker card in the last index.
             Card[] twoPair = new Card[3];
             if (hand[0].cardValue == hand[1].cardValue && hand[2].cardValue == hand[3].cardValue) {
                 twoPair[0] = hand[0];
@@ -176,33 +188,35 @@ namespace CardGame {
             }
 
             if (twoPair[0] != null && twoPair[1] != null && twoPair[2] != null) {
-                // sort pairs descending
+                // Sort the values of the pairs in descending order.
                 if (twoPair[0].cardValue < twoPair[1].cardValue) {
                     Card temp = twoPair[0];
                     twoPair[0] = twoPair[1];
                     twoPair[1] = temp;
                 }
+                // Store the higher valued pair in first index, followed by the remaining pair and remaining card as kickers.
                 twoPairKickers.Add(twoPair[0]);
                 twoPairKickers.Add(twoPair[1]);
                 twoPairKickers.Add(twoPair[2]);
             }
         }
 
-        public void getHighCard() {
+        public void evaluateHighCard() {
+            // Add cards to kickers in descending order
             for (int i=4; i>=0; i--) {
                 highCardKickers.Add(hand[i]);
             }
         }
 
         public void evaluateHand() {
-            getFourOfAKind();
-            getStraight();
-            getFlush();
-            getFullHouse();
-            getThreeOfAKind();
-            getTwoPair();
-            getOnePair();
-            getHighCard();
+            evaluateFourOfAKind();
+            evaluateStraight();
+            evaluateFlush();
+            evaluateFullHouse();
+            evaluateThreeOfAKind();
+            evaluateTwoPair();
+            evaluateOnePair();
+            evaluateHighCard();
 
             if(fourOfAKindKickers.Count > 0) {
                 isFourOfAKind = true;

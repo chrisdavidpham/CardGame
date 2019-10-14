@@ -19,7 +19,7 @@ namespace CardGame {
 
                 for (int j = 0; j < 5; j++) {
                     try {
-                        playerHand.Add(gameDeck.getRandom());
+                        playerHand.Add(gameDeck.drawRandomCard());
                     }
                     catch (System.InvalidOperationException ex) {
                         Console.WriteLine("There are not enough cards for all the players. Press enter to continue");
@@ -44,34 +44,7 @@ namespace CardGame {
             Console.WriteLine("Welcome players. Cards are represented as Value-Suit");
             for (int i = 0; i < players.Count; i++) {
                 Console.WriteLine(players[i].name + " :");
-
-                if (players[i].hand.isFourOfAKind) {
-                    Console.WriteLine(players[i].getHandString() + " - Four of a kind");
-                }
-                else if (players[i].hand.isStraight && players[i].hand.isFlush) {
-                    Console.WriteLine(players[i].getHandString() + " - Straight flush");
-                }
-                else if (players[i].hand.isFlush) {
-                    Console.WriteLine(players[i].getHandString() + " - Flush");
-                }
-                else if (players[i].hand.isStraight) {
-                    Console.WriteLine(players[i].getHandString() + " - Straight");
-                }
-                else if (players[i].hand.isFullHouse) {
-                    Console.WriteLine(players[i].getHandString() + " - Full House");
-                }
-                else if (players[i].hand.isThreeOfAKind) {
-                    Console.WriteLine(players[i].getHandString() + " - Three of a Kind");
-                }
-                else if (players[i].hand.isTwoPair) {
-                    Console.WriteLine(players[i].getHandString() + " - Two Pair");
-                }
-                else if (players[i].hand.isOnePair) {
-                    Console.WriteLine(players[i].getHandString() + " - One Pair");
-                }
-                else {
-                    Console.WriteLine(players[i].getHandString() + " - High card");
-                }
+                Console.WriteLine(players[i].getHandString());
             }
 
             if (table.tiePlayers.Count > 0) {
