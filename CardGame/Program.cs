@@ -4,6 +4,12 @@ using System.Collections.Generic;
 namespace CardGame {
     public class CardGame {
         static int Main(string[] args) {
+            if (0 == args.Length) {
+                Console.WriteLine("No input file is specified. A file must be provided. Press enter to continue");
+                Console.ReadLine();
+                return 0;
+            }
+
             List<Player> players = new List<Player>();
             string line = "";
             System.IO.StreamReader file = new System.IO.StreamReader(args[0]);
